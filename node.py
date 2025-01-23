@@ -119,7 +119,7 @@ class LinkedList:
             prev = self.head
             curr = prev.next
             while curr:
-                if curr_index == index:
+                if index == curr_index:
                     temp = Node(data, curr)
                     prev.next = temp
                     break
@@ -130,9 +130,9 @@ class LinkedList:
     #insert "data_insert" after "data_key"
     def insert_after_data(self, data_key,  data_insert):
         curr = self.head
-        while curr:
-            if curr.data == data_key:
-                temp = Node(data_insert)
+        while curr:                             # begin traversing list from head element down
+            if curr.data == data_key:           # when data_key is found
+                temp = Node(data_insert)        # data_insert is inserted after
                 temp.next = curr.next
                 curr.next = temp
                 break
@@ -149,38 +149,35 @@ class LinkedList:
     # delete beginning element in linked list
     def delete_begin(self):
         if self.is_empty():
-            print("Delete Begin: Array is empty")
-        elif self.head.next.is_empty():
-            self.head = self.head.next
+            print("Delete Begin: Array is empty")       # if list is empty
         else:
-            self.head = None
+            self.head = self.head.next                  # delete head node
 
     # delete end element in linked list
     def delete_end(self):
-        if not self.head.next:
-            self.head = None
+        if not self.head.next:                      # if list is single element
+            self.head.data = None
         else:
             prev = self.head
             curr = self.head.next
-            while curr.next:
+            while curr.next:                        # traverse linked list till curr == end element
                 prev = curr
                 curr = curr.next
-            prev.next = None
+            prev.next = None                        # delete end element
 
     # delete "data" element from linked list
     def delete_data(self, key):
         curr = self.head
         if not curr:
-            print("List is empty")
+            print("List is empty")                      # if list is empty
             pass
-        if curr.data == key:
+        if curr.data == key:                            # corner case: if key is in head element
             self.delete_begin()
-        while curr.next:
-            if key == curr.next.data:
-                temp = curr.next
-                if temp.next:
-                    curr.next = temp.next
-                else: curr.next = None
+        prev = curr
+        curr = curr.next
+        while curr:                                # traverse linked list
+            if key == curr.data:                   # till key is found
+                prev.next = None                   # delete pointer to "key" element
                 break
             curr = curr.next
         else: print("Item not found for deletion")
